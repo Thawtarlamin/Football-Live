@@ -79,33 +79,47 @@ public class LiveScore {
                             streamModals.add(new StreamModal(href));
                         }
                         for (Element e:es){
-                            String href = e.select("div[class=matchname]").select("a").attr("href");
+                            String href = e.select("div[class=col-xl-12]").select("a").attr("href");
                             String league = e.select("span[style=color:#fbc02d;]").text();
-                            if (!league.isEmpty()&!league.isEmpty()){
+                            if (!league.isEmpty()){
                                 hrefModals.add(new HrefModal(href));
                                 leagueModals.add(new LeagueModal(league));
                             }
 
                             Elements image = e.select("div[class=matchname]").select("img");
-                            Elements titles = e.select("div[class=matchname]");
+                            String home_name = e.select("td[style=width:46.5%;text-align:right;font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; padding-right: 14px;]").text();
+                            String away_name = e.select("td[style=width:46.5%;text-align:left;font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; padding-left: 14px;]").text();
+                            if (!home_name.isEmpty()&&!away_name.isEmpty()){
+                                homeNameModals.add(new HomeNameModal(home_name));
+                                awayNameModals.add(new AwayNameModal(away_name));
+                            }
+
                             Elements time = e.select("span[class=gmt_m_time]");
-                            String sta = e.select("div[class=item-col fixed pull-left item-col-stream]").text().replace("stream","").replace(" ","");
+                            String sta = e.select("div[class=item-col fixed pull-left item-col-stream]").select("a[class=open_the_door]").text().replace("stream","").replace(" ","");
+
                             if (!sta.isEmpty()){
                                 statusModals.add(new StatusModal(sta));
                             }
+                            String home_flag = "https://1.livesoccer.sx/"+e.select("td[style=width:46.5%;text-align:right;font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; padding-right: 14px;]").select("img[style=width: 25px;height: 25px;margin: 2px 2px 2px 2px;border: 1px solid #eceeef;background: #eceeef;border-radius: 50px;]").attr("src");
+                            String away_flag = "https://1.livesoccer.sx/"+e.select("td[style=width:46.5%;text-align:left;font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; padding-left: 14px;]").select("img[style=width: 25px;height: 25px;margin: 2px 2px 2px 2px;border: 1px solid #eceeef;background: #eceeef;border-radius: 50px;]").attr("src");
 
-
-                            for(Element s:titles){
-                                String home_name = s.select("td[style=width:46.5%;text-align:right;font-family: 'Titillium Web', sans-serif;;font-weight: 400;padding-right: 14px;]").text();
-                                String away_name = s.select("td[style=width:46.5%;text-align:left;font-family: 'Titillium Web', sans-serif;font-weight: 400;padding-left: 14px;]").text();
-                                homeNameModals.add(new HomeNameModal(home_name));
-                                awayNameModals.add(new AwayNameModal(away_name));
-                                String home_flag = "https://1.livesoccer.sx/"+s.select("td[style=width:46.5%;text-align:right;font-family: 'Titillium Web', sans-serif;;font-weight: 400;padding-right: 14px;] img").attr("src");
-                                String away_flag = "https://1.livesoccer.sx/"+s.select("td[style=width:46.5%;text-align:left;font-family: 'Titillium Web', sans-serif;font-weight: 400;padding-left: 14px;] img").attr("src");
+                            if (!home_flag.contains(".jpg")&&!away_flag.contains(".jpg")){
                                 homeFlagModals.add(new HomeFlagModal(home_flag));
                                 awayFlagModals.add(new AwayFlagModal(away_flag));
-
                             }
+
+
+
+//                            for(Element s:titles){
+//                                String home_name = s.select("td[style=width:46.5%;text-align:right;font-family: 'Titillium Web', sans-serif;;font-weight: 400;padding-right: 14px;]").text();
+//                                String away_name = s.select("td[style=width:46.5%;text-align:left;font-family: 'Titillium Web', sans-serif;font-weight: 400;padding-left: 14px;]").text();
+//
+//                                String home_flag = "https://1.livesoccer.sx/"+s.select("td[style=width:46.5%;text-align:right;font-family: 'Titillium Web', sans-serif;;font-weight: 400;padding-right: 14px;] img").attr("src");
+//                                String away_flag = "https://1.livesoccer.sx/"+s.select("td[style=width:46.5%;text-align:left;font-family: 'Titillium Web', sans-serif;font-weight: 400;padding-left: 14px;] img").attr("src");
+//                                homeFlagModals.add(new HomeFlagModal(home_flag));
+//                                awayFlagModals.add(new AwayFlagModal(away_flag));
+//
+//                            }
                             for (Element t :time){
 
                                 String times = t.text();
@@ -120,7 +134,7 @@ public class LiveScore {
 
                         }
 
-                        for (int i = 0;homeFlagModals.size()>i;i++){
+                        for (int i = 0;leagueModals.size()>i;i++){
                             modal = new LoadModal(
                                     leagueModals.get(i).getLeague(),
                                     timeModals.get(i).getTime(),
