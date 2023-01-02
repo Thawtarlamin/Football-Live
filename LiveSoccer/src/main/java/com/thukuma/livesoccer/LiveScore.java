@@ -100,8 +100,8 @@ public class LiveScore {
                             if (!sta.isEmpty()){
                                 statusModals.add(new StatusModal(sta));
                             }
-                            String home_flag = "https://1.livesoccer.sx/"+e.select("td[style=width:46.5%;text-align:right;font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; padding-right: 14px;]").select("img[style=width: 25px;height: 25px;margin: 2px 2px 2px 2px;border: 1px solid #eceeef;background: #eceeef;border-radius: 50px;]").attr("src");
-                            String away_flag = "https://1.livesoccer.sx/"+e.select("td[style=width:46.5%;text-align:left;font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; padding-left: 14px;]").select("img[style=width: 25px;height: 25px;margin: 2px 2px 2px 2px;border: 1px solid #eceeef;background: #eceeef;border-radius: 50px;]").attr("src");
+                            String home_flag = "https://1.livesoccer.sx/"+e.select("td[style=width:46.5%;text-align:right;font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; padding-right: 14px;]").select("img").attr("src");
+                            String away_flag = "https://1.livesoccer.sx/"+e.select("td[style=width:46.5%;text-align:left;font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; padding-left: 14px;]").select("img").attr("src");
 
                             if (!home_flag.contains(".jpg")&&!away_flag.contains(".jpg")){
                                 homeFlagModals.add(new HomeFlagModal(home_flag));
